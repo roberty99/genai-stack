@@ -2,8 +2,20 @@ services:
 
   llm: &llm
     image: ollama/ollama:latest
+    profiles: ["linux"]
     networks:
       - net
+
+  llm-gpu:
+    <<: *llm
+    profiles: ["linux-gpu"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   pull-model:
     image: genai-stack/pull-model:latest
@@ -59,7 +71,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_healthy
+        condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
@@ -100,7 +112,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_healthy
+        condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
@@ -137,7 +149,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_healthy
+        condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
@@ -176,7 +188,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_healthy
+        condition: service_completed_successfully
     x-develop:
       watch:
         - action: rebuild
