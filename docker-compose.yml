@@ -5,7 +5,6 @@ services:
     networks:
       - net
 
-
   pull-model:
     image: genai-stack/pull-model:latest
     build:
@@ -60,7 +59,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_completed_successfully
+        condition: service_healthy
     x-develop:
       watch:
         - action: rebuild
@@ -101,7 +100,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_completed_successfully
+        condition: service_healthy
     x-develop:
       watch:
         - action: rebuild
@@ -138,7 +137,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_completed_successfully
+        condition: service_healthy
     x-develop:
       watch:
         - action: rebuild
@@ -177,7 +176,7 @@ services:
       database:
         condition: service_healthy
       pull-model:
-        condition: service_completed_successfully
+        condition: service_healthy
     x-develop:
       watch:
         - action: rebuild
